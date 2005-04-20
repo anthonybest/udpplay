@@ -98,8 +98,8 @@ int main(int argc, char *argv[])
 		}
 	} while (z>0);
 	
-    fwrite(buf, len, sizeof(char), stdout);
 	/*
+    fwrite(buf, len, sizeof(char), stdout);
 	
 	return 1;
 	*/
