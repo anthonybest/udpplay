@@ -9,15 +9,22 @@ abest: cheap udp packet
 #include <stdio.h>
 #include <unistd.h>
 
+#define MAX_PACKET (0xffff - 29)
+#define BUFSIZE 1024
+
 int main(int argc, char *argv[])
 {
 
 	int sock, r, i;
 	int z;
+	int len;
 	int port = 12345;
 	struct sockaddr_in sAddr;
 	struct sockaddr_in cAddr;
 	struct hostent *he;
+	char * buf;
+	int buflen = 0;
+	char * p;
 
 	//ARGS
 	if(argc<2)
@@ -57,24 +64,56 @@ int main(int argc, char *argv[])
 	}
 	
 	// Not exactly the best method.
+	len = 0;
+	p = buf = malloc(sizeof(char)*BUFSIZE);
+	buflen = BUFSIZE;
+
+	if(!buf)
+	{
+		fprintf(stderr, "%s: malloc failed\n", argv[0]);
+		exit(1);
+	}
+
 	do
 	{
-		char buf[64000];
-		//65506
-		z = fread(buf, 1, 64000, stdin);
-			
-
-		if(z > 0)
+		if(len == buflen)
 		{
-			if( 0 > sendto(sock, buf, z, 0,
-						(struct sockaddr *) &sAddr,
-						sizeof(sAddr)))
+			buf = (char * )realloc(buf, 
+					(sizeof(char) * buflen) + (sizeof(char) * BUFSIZE));
+			if(!buf)
 			{
-				fprintf(stderr, "%s: unable to write to socket\n", argv[0]);
+				fprintf(stderr, "%s: Realloc failed\n", argv[0]);
 				exit(1);
 			}
+			p = buf;
+			p += len;
+			buflen += BUFSIZE;
+		}
+		
+		z = fread(p, sizeof(char), buflen-len, stdin);
+		if(z > 0)
+		{
+			len += z;
+			p += z;
 		}
 	} while (z>0);
+	
+    fwrite(buf, len, sizeof(char), stdout);
+	/*
+	
+	return 1;
+	*/
+			
+
+	r = sendto(sock, buf, len, 0,
+				(struct sockaddr *) &sAddr,
+				sizeof(sAddr));
+	if( 0 > r)
+	{
+		fprintf(stderr, "r = %i\n", r);
+		fprintf(stderr, "%s: unable to write to socket\n", argv[0]);
+		exit(1);
+	}
 
 	return 0;
 }

@@ -1,1 +1,1 @@
-all: udpplay
+all: udpplay repeater
