@@ -1,1 +1,1 @@
-all: udpplay repeater dehex
+all: udpplay tcpplay repeater dehex
