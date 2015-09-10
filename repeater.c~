@@ -1,8 +1,8 @@
 #include <stdio.h>
 int main(int argc, char *argv[])
 {
-	int c = 0;
-	char x;
+	int     c = 0;
+	char    x;
 	if (argc != 2)
 	{
 		fprintf(stderr, " Usage: %s count\n", argv[0]);
