@@ -1,4 +1,3 @@
-
 /*
 abest: cheap udp packet
 */
@@ -9,6 +8,8 @@ abest: cheap udp packet
 #include <netdb.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
 #define MAX_PACKET (0xffff - 29)
 #define BUFSIZE 1024
@@ -16,7 +17,7 @@ abest: cheap udp packet
 int main(int argc, char *argv[])
 {
 
-	int sock, r, i;
+	int sock, r;
 	int z;
 	int len;
 	int port = 12345;

@@ -1,4 +1,3 @@
-
 /*
 abest: cheap tcp
 */
@@ -9,6 +8,8 @@ abest: cheap tcp
 #include <netdb.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
 
 // NOT for TCP
 #define MAX_PACKET (0xffff - 29)
@@ -17,7 +18,7 @@ abest: cheap tcp
 int main(int argc, char *argv[])
 {
 
-	int sock, r, i;
+	int sock, r;
 	int z;
 	int len;
 	int port = 12345;
