@@ -8,7 +8,7 @@ int main(int argc , char * argv[])
 	int i;
 	int o;
 	int o1, o2;
-	
+
 	while(NULL != fgets(buf, 1024, stdin))
 	{
 		len = strlen(buf);
@@ -43,7 +43,7 @@ int main(int argc , char * argv[])
 				break;
 			// we must have got a good char, so reset space counter
 			sc = 0;
-			
+
 
 			if(o >= 0)
 			{
@@ -76,7 +76,7 @@ int main(int argc , char * argv[])
 				}
 
 			}
-			
+
 
 		}
 		//fwrite("\n", sizeof(char), 1, stdout);

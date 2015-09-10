@@ -9,7 +9,7 @@ int main(int argc, char * argv[])
 		exit(1);
 	}
 	c = atoi(argv[1]);
-	
+
 	while(c > 0)
 	{
 		x = (c--%0x5f)+0x20;

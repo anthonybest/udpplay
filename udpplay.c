@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
 
 	he = gethostbyname (argv[1]);
 	if(he == NULL)
-	{		
+	{
 		fprintf(stderr, "%s: Unable to resolve host '%s' \n", argv[0],
 				argv[1]);
 		exit(1);
@@ -52,17 +52,17 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "%s: unable to open socket\n", argv[0]);
 		exit(1);
 	}
-	
+
     cAddr.sin_family = AF_INET;
 	cAddr.sin_addr.s_addr = htonl(INADDR_ANY);
 	cAddr.sin_port = htons(0);
-	
+
 	if( 0 > bind(sock, (struct sockaddr *) &cAddr, sizeof(cAddr)))
 	{
 		fprintf(stderr, "%s: unable to bind socket\n", argv[0]);
 		exit(1);
 	}
-	
+
 	// Not exactly the best method.
 	len = 0;
 	p = buf = malloc(sizeof(char)*BUFSIZE);
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 	{
 		if(len == buflen)
 		{
-			buf = (char * )realloc(buf, 
+			buf = (char * )realloc(buf,
 					(sizeof(char) * buflen) + (sizeof(char) * BUFSIZE));
 			if(!buf)
 			{
@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 			p += len;
 			buflen += BUFSIZE;
 		}
-		
+
 		z = fread(p, sizeof(char), buflen-len, stdin);
 		if(z > 0)
 		{
@@ -97,13 +97,13 @@ int main(int argc, char *argv[])
 			p += z;
 		}
 	} while (z>0);
-	
+
 	/*
     fwrite(buf, len, sizeof(char), stdout);
-	
+
 	return 1;
 	*/
-			
+
 
 	r = sendto(sock, buf, len, 0,
 				(struct sockaddr *) &sAddr,
